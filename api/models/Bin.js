@@ -3,8 +3,6 @@ import mongoose from "mongoose";
 const BinSchema = new mongoose.Schema({
   binId: {
     type: String,
-    required: true,
-    unique: true,
   },
   status: {
     type: String,
@@ -23,8 +21,6 @@ const BinSchema = new mongoose.Schema({
   },
   binType: {
     type: String,
-    enum: ["recyclable", "non-recyclable", "organic", "hazardous"],
-    required: true,
   },
   wasteLevel: {
     type: Number,
@@ -40,8 +36,6 @@ const BinSchema = new mongoose.Schema({
   },
   ownerId: {
     type: String,
-
-    required: true,
   },
   maintenanceStatus: {
     type: Boolean,

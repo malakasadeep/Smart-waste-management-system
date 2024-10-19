@@ -1,5 +1,10 @@
-import React, { useState, useCallback } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  StandaloneSearchBox,
+} from "@react-google-maps/api";
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyAPcKOA3rdm5EO1cFlnHvI-yEJRepMzF30";
 
@@ -26,9 +31,23 @@ const CreateNewBin = () => {
     maintenanceStatus: false,
   });
 
+  const [currentStep, setCurrentStep] = useState(1);
+  const searchBoxRef = useRef(null);
+  const mapRef = useRef(null);
+
+  // Function to generate a unique bin ID
+  const generateBinId = () => `BIN-${Date.now()}`;
+
+  useEffect(() => {
+    // Automatically generate bin ID when the component mounts
+    setBinData((prevData) => ({
+      ...prevData,
+      binId: generateBinId(),
+    }));
+  }, []);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     if (name === "lat" || name === "lng") {
       setBinData((prevData) => ({
         ...prevData,
@@ -41,15 +60,8 @@ const CreateNewBin = () => {
     }
   };
 
-  // Handle map click to set location
-  const handleMapClick = useCallback((event) => {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
-    setBinData((prevData) => ({
-      ...prevData,
-      location: { lat, lng },
-    }));
-  }, []);
+  const handleNextStep = () => setCurrentStep((prevStep) => prevStep + 1);
+  const handlePrevStep = () => setCurrentStep((prevStep) => prevStep - 1);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,155 +75,226 @@ const CreateNewBin = () => {
       if (response.ok) {
         alert("Bin added successfully");
       } else {
-        alert("Error: " + data.message);
+        alert("Error: " + (data.message || "Unknown error occurred"));
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("Error occurred while adding the bin. Please try again.");
     }
   };
 
+  const handleMapClick = useCallback((event) => {
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+    setBinData((prevData) => ({
+      ...prevData,
+      location: { lat, lng },
+    }));
+  }, []);
+
+  const handlePlacesChanged = () => {
+    const places = searchBoxRef.current.getPlaces();
+    if (places.length === 0) return;
+
+    const place = places[0];
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+
+    setBinData((prevData) => ({
+      ...prevData,
+      location: { lat, lng },
+    }));
+
+    mapRef.current.panTo({ lat, lng });
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Bin ID</label>
-          <input
-            type="text"
-            name="binId"
-            value={binData.binId}
-            onChange={handleChange}
-            required
-          />
-        </div>
+    <div className="max-w-2xl mx-auto p-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {currentStep === 1 && (
+          <>
+            <h3 className="text-lg font-medium text-gray-700">
+              Step 1: Bin Details
+            </h3>
+            <div>
+              <label
+                htmlFor="binId"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Bin ID
+              </label>
+              <input
+                type="text"
+                name="binId"
+                value={binData.binId}
+                readOnly
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
 
-        <div>
-          <label>Bin Status</label>
-          <select name="status" value={binData.status} onChange={handleChange}>
-            <option value="empty">Empty</option>
-            <option value="full">Full</option>
-            <option value="damaged">Damaged</option>
-            <option value="awaiting collection">Awaiting Collection</option>
-          </select>
-        </div>
+            <div>
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Status
+              </label>
+              <select
+                name="status"
+                value={binData.status}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option value="empty">Empty</option>
+                <option value="full">Full</option>
+                <option value="damaged">Damaged</option>
+                <option value="awaiting collection">Awaiting Collection</option>
+              </select>
+            </div>
 
-        <div>
-          <label>Bin Type</label>
-          <select
-            name="binType"
-            value={binData.binType}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Type</option>
-            <option value="recyclable">Recyclable</option>
-            <option value="non-recyclable">Non-Recyclable</option>
-            <option value="organic">Organic</option>
-            <option value="hazardous">Hazardous</option>
-          </select>
-        </div>
+            <button
+              type="button"
+              onClick={handleNextStep}
+              className="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Next
+            </button>
+          </>
+        )}
 
-        <div>
-          <label>Capacity (kg)</label>
-          <input
-            type="number"
-            name="capacity"
-            value={binData.capacity}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {currentStep === 2 && (
+          <>
+            <h3 className="text-lg font-medium text-gray-700">
+              Step 2: Location & Capacity
+            </h3>
+            <div>
+              <label
+                htmlFor="capacity"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Capacity (Kg)
+              </label>
+              <input
+                type="number"
+                name="capacity"
+                value={binData.capacity}
+                onChange={handleChange}
+                required
+                min="1" // Ensure capacity is at least 1 Kg
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
 
-        <div>
-          <label>Waste Level (0-100)</label>
-          <input
-            type="number"
-            name="wasteLevel"
-            value={binData.wasteLevel}
-            min="0"
-            max="100"
-            onChange={handleChange}
-          />
-        </div>
+            <div>
+              <label
+                htmlFor="wasteLevel"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Waste Level
+              </label>
+              <input
+                type="number"
+                name="wasteLevel"
+                value={binData.wasteLevel}
+                min="0"
+                max="100"
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
 
-        {/* Display lat and lng */}
-        <div>
-          <label>Location (Latitude)</label>
-          <input
-            type="number"
-            name="lat"
-            value={binData.location.lat}
-            onChange={handleChange}
-            required
-            readOnly
-          />
-        </div>
+            {/* Location selection using Google Maps */}
+            <h3 className="text-lg font-medium text-gray-700">
+              Select Bin Location
+            </h3>
+            <LoadScript
+              googleMapsApiKey={GOOGLE_MAPS_API_KEY}
+              libraries={["places"]}
+            >
+              <StandaloneSearchBox
+                onLoad={(ref) => (searchBoxRef.current = ref)}
+                onPlacesChanged={handlePlacesChanged}
+              >
+                <input
+                  type="text"
+                  placeholder="Search location..."
+                  className="w-full mb-4 px-4 py-2 border rounded-md"
+                />
+              </StandaloneSearchBox>
 
-        <div>
-          <label>Location (Longitude)</label>
-          <input
-            type="number"
-            name="lng"
-            value={binData.location.lng}
-            onChange={handleChange}
-            required
-            readOnly
-          />
-        </div>
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                center={defaultCenter}
+                zoom={12}
+                onClick={handleMapClick}
+                onLoad={(map) => (mapRef.current = map)}
+              >
+                {binData.location.lat && binData.location.lng && (
+                  <Marker
+                    position={{
+                      lat: parseFloat(binData.location.lat),
+                      lng: parseFloat(binData.location.lng),
+                    }}
+                  />
+                )}
+              </GoogleMap>
+            </LoadScript>
 
-        <div>
-          <label>Owner ID</label>
-          <input
-            type="text"
-            name="ownerId"
-            value={binData.ownerId}
-            onChange={handleChange}
-            required
-          />
-        </div>
+            <div className="mt-4 flex justify-between">
+              <button
+                type="button"
+                onClick={handlePrevStep}
+                className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              >
+                Previous
+              </button>
+              <button
+                type="button"
+                onClick={handleNextStep}
+                className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Next
+              </button>
+            </div>
+          </>
+        )}
 
-        <div>
-          <label>Last Emptied</label>
-          <input
-            type="date"
-            name="lastEmptied"
-            value={binData.lastEmptied}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {currentStep === 3 && (
+          <>
+            <h3 className="text-lg font-medium text-gray-700">
+              Step 3: Maintenance & Submission
+            </h3>
+            <div>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="maintenanceStatus"
+                  checked={binData.maintenanceStatus}
+                  onChange={handleChange}
+                  className="mr-2"
+                />
+                Maintenance Needed
+              </label>
+            </div>
 
-        <div>
-          <label>Maintenance Status</label>
-          <input
-            type="checkbox"
-            name="maintenanceStatus"
-            checked={binData.maintenanceStatus}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button type="submit">Add Bin</button>
+            <div className="mt-4 flex justify-between">
+              <button
+                type="button"
+                onClick={handlePrevStep}
+                className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              >
+                Previous
+              </button>
+              <button
+                type="submit"
+                className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Submit
+              </button>
+            </div>
+          </>
+        )}
       </form>
-
-      {/* Google Maps Integration */}
-      <h3>Select Bin Location</h3>
-      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={defaultCenter}
-          zoom={12}
-          onClick={handleMapClick} // Capture click event on the map
-        >
-          {binData.location.lat && binData.location.lng && (
-            <Marker
-              position={{
-                lat: parseFloat(binData.location.lat),
-                lng: parseFloat(binData.location.lng),
-              }}
-            />
-          )}
-        </GoogleMap>
-      </LoadScript>
     </div>
   );
 };
