@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import binRoutes from "./routes/BinRoutes.js";
+import jobRoutes from "./routes/JobRoutes.js";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use("/api/bin", binRoutes);
+app.use("/api/job", jobRoutes);
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000!!!");

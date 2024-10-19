@@ -40,8 +40,6 @@ const BinSchema = new mongoose.Schema({
   },
   ownerId: {
     type: String,
-
-    required: true,
   },
   maintenanceStatus: {
     type: Boolean,
