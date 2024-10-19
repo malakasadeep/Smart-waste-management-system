@@ -15,6 +15,7 @@ import BinDetailsPage from "./pages/binmanage/BinDetailsPage";
 
 import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/SignUp";
+import Home from "./pages/Home";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+        <Route path="/home" element={<Home />}></Route>
           <Route path="/" element={<AdminSidebar />}></Route>
           <Route path="/add" element={<CreateNewBin />}></Route>
           <Route path="/track" element={<BinTrack />}></Route>
