@@ -9,6 +9,8 @@ import AdminSidebar from "./components/AdminSidebar";
 import CreateNewBin from "./pages/binmanage/CreateNewBin";
 import BinTrack from "./pages/binmanage/BinTrack";
 import QrBinScanner from "./pages/binmanage/QrBinScanner";
+import Signin from "./pages/auth/Signin";
+import Signup from "./pages/auth/SignUp";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/add" element={<CreateNewBin />}></Route>
           <Route path="/track" element={<BinTrack />}></Route>
           <Route path="/scan" element={<QrBinScanner />}></Route>
+          <Route path="/sign-in" element={<Signin />}></Route>
+          <Route path="/sign-up" element={<Signup />}></Route>
         </Routes>
       </BrowserRouter>
     </>
