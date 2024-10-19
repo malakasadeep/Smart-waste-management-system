@@ -25,9 +25,9 @@ const AdminSidebar = ({ onCollapseChange }) => {
     setCollapsed(!isCollapsed);
   };
 
-  //   useEffect(() => {
-  //     onCollapseChange(isCollapsed);
-  //   }, [isCollapsed, onCollapseChange]);
+  useEffect(() => {
+    onCollapseChange(isCollapsed);
+  }, [isCollapsed, onCollapseChange]);
 
   return (
     <div style={{ display: "flex" }}>
@@ -100,7 +100,7 @@ const AdminSidebar = ({ onCollapseChange }) => {
         {/* Menu Items */}
         <Menu>
           <SubMenu
-            label={isCollapsed ? "" : "Inventory Management"}
+            label={isCollapsed ? "" : "Bin Management"}
             icon={<FaChartBar />}
             rootStyles={{
               color: "#fff",
@@ -111,16 +111,16 @@ const AdminSidebar = ({ onCollapseChange }) => {
             }}
             className="sidebar-submenu"
           >
-            <Link to="/dash">
+            <Link to="/">
               <MenuItem suffix={<span className="badge red"></span>}>
-                Item List
+                Add New Bin
               </MenuItem>
             </Link>
-            <Link to="/add">
+            {/* <Link to="/add">
               <MenuItem suffix={<span className="badge red"></span>}>
-                Add New Item
+                Trac
               </MenuItem>
-            </Link>
+            </Link> */}
           </SubMenu>
 
           <SubMenu
