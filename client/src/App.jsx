@@ -11,12 +11,14 @@ import BinTrack from "./pages/binmanage/BinTrack";
 import QrBinScanner from "./pages/binmanage/QrBinScanner";
 import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/SignUp";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+        <Route path="/home" element={<Home />}></Route>
           <Route path="/" element={<AdminSidebar />}></Route>
           <Route path="/add" element={<CreateNewBin />}></Route>
           <Route path="/track" element={<BinTrack />}></Route>
