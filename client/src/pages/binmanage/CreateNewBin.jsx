@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   GoogleMap,
   LoadScript,
@@ -31,9 +31,20 @@ const CreateNewBin = () => {
     maintenanceStatus: false,
   });
 
-  const [currentStep, setCurrentStep] = useState(1); // Multi-step control
+  const [currentStep, setCurrentStep] = useState(1);
   const searchBoxRef = useRef(null);
   const mapRef = useRef(null);
+
+  // Function to generate a unique bin ID
+  const generateBinId = () => `BIN-${Date.now()}`;
+
+  useEffect(() => {
+    // Automatically generate bin ID when the component mounts
+    setBinData((prevData) => ({
+      ...prevData,
+      binId: generateBinId(),
+    }));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -64,10 +75,11 @@ const CreateNewBin = () => {
       if (response.ok) {
         alert("Bin added successfully");
       } else {
-        alert("Error: " + data.message);
+        alert("Error: " + (data.message || "Unknown error occurred"));
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("Error occurred while adding the bin. Please try again.");
     }
   };
 
@@ -105,22 +117,27 @@ const CreateNewBin = () => {
               Step 1: Bin Details
             </h3>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="binId"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Bin ID
               </label>
               <input
                 type="text"
                 name="binId"
                 value={binData.binId}
-                onChange={handleChange}
-                required
+                readOnly
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Bin Status
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Status
               </label>
               <select
                 name="status"
@@ -151,8 +168,11 @@ const CreateNewBin = () => {
               Step 2: Location & Capacity
             </h3>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Capacity (kg)
+              <label
+                htmlFor="capacity"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Capacity (Kg)
               </label>
               <input
                 type="number"
@@ -160,13 +180,17 @@ const CreateNewBin = () => {
                 value={binData.capacity}
                 onChange={handleChange}
                 required
+                min="1" // Ensure capacity is at least 1 Kg
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Waste Level (0-100)
+              <label
+                htmlFor="wasteLevel"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Waste Level
               </label>
               <input
                 type="number"
@@ -241,50 +265,19 @@ const CreateNewBin = () => {
               Step 3: Maintenance & Submission
             </h3>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Owner ID
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="maintenanceStatus"
+                  checked={binData.maintenanceStatus}
+                  onChange={handleChange}
+                  className="mr-2"
+                />
+                Maintenance Needed
               </label>
-              <input
-                type="text"
-                name="ownerId"
-                value={binData.ownerId}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Last Emptied
-              </label>
-              <input
-                type="date"
-                name="lastEmptied"
-                value={binData.lastEmptied}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Maintenance Status
-              </label>
-              <input
-                type="checkbox"
-                name="maintenanceStatus"
-                checked={binData.maintenanceStatus}
-                onChange={handleChange}
-                className="mt-1 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-              />
-              <span className="ml-2 text-sm text-gray-700">
-                Under Maintenance
-              </span>
-            </div>
-
-            <div className="mt-6 flex justify-between">
+            <div className="mt-4 flex justify-between">
               <button
                 type="button"
                 onClick={handlePrevStep}
@@ -294,7 +287,7 @@ const CreateNewBin = () => {
               </button>
               <button
                 type="submit"
-                className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Submit
               </button>
