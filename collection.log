@@ -46,3 +46,25 @@
 {"level":"error","message":"Error retrieving collections connection <monitor> to 35.187.229.13:27017 timed out","timestamp":"2024-10-20T06:18:40.724Z"}
 {"level":"error","message":"Error retrieving collections connection <monitor> to 35.187.229.13:27017 timed out","timestamp":"2024-10-20T06:18:40.727Z"}
 {"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:18:51.932Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T08:19:14.252Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T08:19:14.538Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T08:19:14.546Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T08:19:14.666Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T08:20:06.665Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T08:20:06.813Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T08:20:06.818Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T08:20:07.066Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T08:21:14.331Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T08:21:15.692Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T08:21:15.697Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T08:21:15.815Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T09:23:01.713Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T09:23:01.850Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T09:23:01.855Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T09:23:01.976Z"}
+{"body":{"collectionDate":"2024-10-20","collectionType":"Standard Waste","contactInfo":{"email":"p.g.m.sadeep2001@gmail.com","phoneNumber":"0714098982"},"location":{"coordinates":[-56.19082834987322,-119.09941294087012],"type":"Point"},"paymentMethod":"Online Payment","pickupAddress":"dfghjkl;","specialInstructions":"ergghjjkk","termsAgreed":true,"timeSlot":"Morning","wasteDescription":"dfghjkl"},"level":"info","message":"Creating a new collection","timestamp":"2024-10-20T09:24:31.735Z"}
+{"collection":{"__v":0,"_id":"6714cc4f513f2b32c5e06d30","collectionDate":"2024-10-20T00:00:00.000Z","collectionType":"Standard Waste","contactInfo":{"email":"p.g.m.sadeep2001@gmail.com","phoneNumber":"0714098982"},"createdAt":"2024-10-20T09:24:31.748Z","location":{"coordinates":[-56.19082834987322,-119.09941294087012],"type":"Point"},"paymentMethod":"Online Payment","pickupAddress":"dfghjkl;","specialInstructions":"ergghjjkk","termsAgreed":true,"timeSlot":"Morning","updatedAt":"2024-10-20T09:24:31.748Z","wasteDescription":"dfghjkl"},"level":"info","message":"Collection created successfully","timestamp":"2024-10-20T09:24:31.901Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T09:24:40.533Z"}
+{"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T09:24:40.682Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T09:24:40.687Z"}
+{"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T09:24:40.851Z"}
