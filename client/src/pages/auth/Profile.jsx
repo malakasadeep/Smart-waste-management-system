@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Trash2,
@@ -16,6 +16,10 @@ import {
   Recycle,
   Truck,
 } from "lucide-react";
+import axios from "axios";
+import ScheduleModal from "../Schedule/ScheduleModal";
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 // Sample data (replace with actual data fetching logic)
 const userData = {
@@ -45,6 +49,29 @@ const UserProfile = () => {
 
   const toggleSection = (section) => {
     setExpandedSection(expandedSection === section ? null : section);
+  };
+  const [upcomingCollections, setUpcomingCollections] = useState([]);
+
+  useEffect(() => {
+    fetchUpcomingCollections();
+  }, []);
+
+  const fetchUpcomingCollections = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/sp-col/");
+      setUpcomingCollections(response.data);
+    } catch (error) {
+      console.error("Error fetching upcoming collections:", error);
+    }
+  };
+
+  const deleteCollection = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/sp-col/${id}`);
+      fetchUpcomingCollections(); // Refresh the list after deletion
+    } catch (error) {
+      console.error("Error deleting collection:", error);
+    }
   };
 
   const sectionVariants = {
@@ -93,56 +120,30 @@ const UserProfile = () => {
     </div>
   );
 
-  const ScheduleModal = () => (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    >
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <h3 className="text-xl font-semibold mb-4">
-          Schedule Special Collection
-        </h3>
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Date
-            </label>
-            <input
-              type="date"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Type
-            </label>
-            <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-              <option>Regular</option>
-              <option>Recycling</option>
-              <option>Organic</option>
-              <option>Bulk</option>
-            </select>
-          </div>
-          <div className="flex justify-end space-x-2">
-            <button
-              type="button"
-              onClick={() => setShowScheduleModal(false)}
-              className="px-4 py-2 border rounded-md text-gray-600 hover:bg-gray-100"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500"
-            >
-              Schedule
-            </button>
-          </div>
-        </form>
+  const UpcomingCollectionItem = ({ collection }) => (
+    <div className="bg-white p-4 rounded-lg shadow mb-4">
+      <div className="flex justify-between items-center mb-2">
+        <h4 className="font-semibold">{collection.collectionType}</h4>
+        <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">
+          Pending
+        </span>
       </div>
-    </motion.div>
+      <p className="text-sm text-gray-600">
+        Date: {format(new Date(collection.collectionDate), "PPP")}
+      </p>
+      <p className="text-sm text-gray-600">Time Slot: {collection.timeSlot}</p>
+      <p className="text-sm text-gray-600">
+        Address: {collection.pickupAddress}
+      </p>
+      <div className="mt-2 flex justify-end">
+        <button
+          onClick={() => deleteCollection(collection._id)}
+          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full text-sm flex items-center"
+        >
+          <Trash2 size={14} className="mr-1" /> Delete
+        </button>
+      </div>
+    </div>
   );
 
   return (
@@ -271,17 +272,16 @@ const UserProfile = () => {
         >
           <div className="space-y-4">
             <h3 className="font-semibold">Upcoming Collections</h3>
-            {userData.upcomingCollections.map((collection, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-center bg-green-100 p-2 rounded"
-              >
-                <span>{collection.date}</span>
-                <span className="bg-green-600 text-white px-2 py-1 rounded">
-                  {collection.type}
-                </span>
-              </div>
-            ))}
+            {upcomingCollections.length > 0 ? (
+              upcomingCollections.map((collection) => (
+                <UpcomingCollectionItem
+                  key={collection._id}
+                  collection={collection}
+                />
+              ))
+            ) : (
+              <p>No upcoming collections scheduled.</p>
+            )}
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setShowScheduleModal(true)}
@@ -305,9 +305,11 @@ const UserProfile = () => {
             <p>
               If you notice any issues with your bins, please report them here.
             </p>
-            <button className="bg-yellow-500 hover:bg-yellow-400 text-white px-4 py-2 rounded flex items-center">
-              <AlertTriangle className="mr-2" /> Report Issue
-            </button>
+            <Link to="/binbugs">
+              <button className="bg-yellow-500 hover:bg-yellow-400 text-white px-4 py-2 rounded flex items-center">
+                <AlertTriangle className="mr-2" /> Report Issue
+              </button>
+            </Link>
           </div>
         </ProfileSection>
 
@@ -320,7 +322,9 @@ const UserProfile = () => {
 
         {/* Schedule Modal */}
         <AnimatePresence>
-          {showScheduleModal && <ScheduleModal />}
+          {showScheduleModal && (
+            <ScheduleModal onClose={() => setShowScheduleModal(false)} />
+          )}
         </AnimatePresence>
       </motion.div>
     </div>
