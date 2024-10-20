@@ -53,11 +53,15 @@ describe("BinDetailsPage", () => {
     );
 
     expect(screen.getByText(/Bin ID:/)).toBeInTheDocument();
-    expect(screen.getByText(/Bin ID:/).nextSibling).toHaveTextContent(binDetails.binId);
-    
+    expect(screen.getByText(/Bin ID:/).nextSibling).toHaveTextContent(
+      binDetails.binId
+    );
+
     expect(screen.getByText(/Status:/)).toBeInTheDocument();
-    expect(screen.getByText(/Status:/).nextSibling).toHaveTextContent(binDetails.status);
-    
+    expect(screen.getByText(/Status:/).nextSibling).toHaveTextContent(
+      binDetails.status
+    );
+
     expect(screen.getByText(/Location:/)).toBeInTheDocument();
     expect(screen.getByText(/Location:/).nextSibling).toHaveTextContent(
       `${binDetails.location.lat} ${binDetails.location.lng}`
