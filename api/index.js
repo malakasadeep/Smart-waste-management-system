@@ -11,6 +11,7 @@ import jobRoutes from "./routes/JobRoutes.js";
 
 import authRoutes from "./routes/AuthRoutes.js";
 
+import sprout from "./routes/SpecialcollectionRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/job", jobRoutes);
 
 app.use("/api/auth", authRoutes);
 
+app.use("/api/sp-col", sprout);
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000!!!");

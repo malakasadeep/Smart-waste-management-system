@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import AdminSidebar from "./components/AdminSidebar";
 import CreateNewBin from "./pages/binmanage/CreateNewBin";
 import BinTrack from "./pages/binmanage/BinTrack";
@@ -20,6 +21,7 @@ import UserProfile from "./pages/auth/Profile";
 function App() {
   return (
     <>
+      <Toaster position="top-right" />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>

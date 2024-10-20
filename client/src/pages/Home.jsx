@@ -165,7 +165,7 @@ export default function Home() {
               </div>
 
               <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
-                <div className="relative flex flex-col min-w-0 break-words bg-green-600 w-full mb-6 shadow-lg rounded-lg bg-green-600">
+                <div className="relative flex flex-col min-w-0 break-words  w-full mb-6 shadow-lg rounded-lg bg-green-600">
                   <img
                     alt="..."
                     src={localImage}
