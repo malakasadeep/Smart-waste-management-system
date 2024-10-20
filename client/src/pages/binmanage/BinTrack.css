@@ -1,0 +1,10 @@
+.custom-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px; /* Adjust based on the icon size */
+  height: 30px; /* Adjust based on the icon size */
+  background-color: white; /* Background color */
+  border-radius: 50%; /* Rounded background */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Optional shadow */
+}

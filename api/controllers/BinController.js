@@ -40,9 +40,8 @@ export const getBinbyId = async (req, res) => {
 };
 
 export const deleteBin = async (req, res) => {
-  const { id } = req.params;
   try {
-    await Bin.findByIdAndDelete(id);
+    await Bin.findByIdAndDelete(req.params.binId);
     res.status(200).json({ message: "Bin Sucessfully Deleated" });
   } catch (error) {
     res.status(500).json({ message: "Error Deleating Bin" });

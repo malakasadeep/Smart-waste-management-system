@@ -18,6 +18,8 @@ import {
 } from "react-router-dom";
 import QrBinScanner from "./binmanage/QrBinScanner";
 import BinDetailsPage from "./binmanage/BinDetailsPage";
+import BinTrack from "./binmanage/BinTrack";
+import BinTable from "./binmanage/BinTable";
 
 const AdminDashboard = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -142,10 +144,20 @@ const AdminDashboard = () => {
         </div>
 
         <Routes>
-          <Route path="/" element={<CreateNewBin />}></Route>
+          <Route path="/add" element={<CreateNewBin />}></Route>
           <Route path="/job" element={<JobList />}></Route>
           <Route path="/gcoll" element={<QrBinScanner />}></Route>
+          <Route path="/allbin" element={<BinTable />}></Route>
           <Route path="/gcoll/bin-dea" element={<BinDetailsPage />}></Route>
+          <Route
+            path="/bmap"
+            element={
+              <div className="pl-20 pr-20">
+                {" "}
+                <BinTrack />
+              </div>
+            }
+          ></Route>
         </Routes>
       </main>
     </div>

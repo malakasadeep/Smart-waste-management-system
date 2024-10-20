@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   getStorage,
   ref,
@@ -18,6 +18,7 @@ const BinDetailsPage = () => {
   const [jobId, setJobId] = useState(
     "JOB_" + Math.random().toString(36).substr(2, 9)
   ); // Example job ID, generate your own or handle it accordingly
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
@@ -86,6 +87,7 @@ const BinDetailsPage = () => {
         const result = await response.json();
         console.log("Job data saved:", result);
         alert("Job data saved successfully!");
+        navigate("/admin/job");
       } else {
         console.error("Error saving job data:", response.statusText);
         alert("Failed to save job data.");
@@ -115,8 +117,9 @@ const BinDetailsPage = () => {
         </p>
 
         <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Upload Proof Image</h3>
+          <label htmlFor="proofImage">Upload Proof Image</label>
           <input
+            id="proofImage"
             type="file"
             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             onChange={handleImageChange}
@@ -128,7 +131,7 @@ const BinDetailsPage = () => {
             onClick={handleUpload}
             disabled={uploading}
           >
-            {uploading ? "Uploading..." : "Upload Image"}
+            {uploading ? "Confirming..." : "Collected"}
           </button>
         </div>
 
