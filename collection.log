@@ -12,3 +12,37 @@
 {"id":"67146ac86151cf32b4aa802f","level":"info","message":"Collection deleted successfully","timestamp":"2024-10-20T04:56:14.464Z"}
 {"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T04:56:14.475Z"}
 {"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T04:56:14.577Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:52:13.575Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:52:13.708Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:52:13.711Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:52:13.825Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:56:03.488Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:56:03.656Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:56:03.660Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:56:04.187Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:58:35.659Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:58:35.791Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:58:35.794Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:58:35.897Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:58:59.693Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:58:59.820Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:58:59.824Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:58:59.932Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:15:02.789Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:15:02.965Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:15:02.969Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:15:03.073Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:15:22.951Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:15:23.076Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:15:23.080Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:15:23.198Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:17:18.054Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:17:18.234Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:17:18.236Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:17:18.383Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:17:44.868Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:17:46.070Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T06:18:06.078Z"}
+{"level":"error","message":"Error retrieving collections connection <monitor> to 35.187.229.13:27017 timed out","timestamp":"2024-10-20T06:18:40.724Z"}
+{"level":"error","message":"Error retrieving collections connection <monitor> to 35.187.229.13:27017 timed out","timestamp":"2024-10-20T06:18:40.727Z"}
+{"count":0,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T06:18:51.932Z"}

@@ -20,7 +20,8 @@ import Home from "./pages/Home";
 
 import AuthComponent from "./pages/auth/AuthComponent";
 import UserProfile from "./pages/auth/Profile";
-
+import BinScan from "./pages/binreport/BinScan";
+import SheduleBug from "./pages/binreport/SheduleBug";
 
 function App() {
   return (
@@ -37,13 +38,14 @@ function App() {
           <Route path="/admin/*" element={<AdminDashboard />}></Route>
           <Route path="/bin-dea" element={<BinDetailsPage />}></Route>
 
-
-          <Route path="/sign-in" element={<Signin />}></Route>
-          <Route path="/sign-up" element={<Signup />}></Route>
+          {/* <Route path="/sign-in" element={<Signin />}></Route>
+          <Route path="/sign-up" element={<Signup />}></Route> */}
 
           <Route path="/auth" element={<AuthComponent />}></Route>
           <Route path="/profile" element={<UserProfile />}></Route>
 
+          <Route path="/binbugs" element={<BinScan />}></Route>
+          <Route path="/bin-bug" element={<SheduleBug />}></Route>
         </Routes>
       </BrowserRouter>
     </>

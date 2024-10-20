@@ -20,6 +20,7 @@ import QrBinScanner from "./binmanage/QrBinScanner";
 import BinDetailsPage from "./binmanage/BinDetailsPage";
 import BinTrack from "./binmanage/BinTrack";
 import BinTable from "./binmanage/BinTable";
+import AllbinBug from "./binreport/AllbinBug";
 
 const AdminDashboard = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -158,6 +159,7 @@ const AdminDashboard = () => {
               </div>
             }
           ></Route>
+          <Route path="/allbug" element={<AllbinBug />}></Route>
         </Routes>
       </main>
     </div>
