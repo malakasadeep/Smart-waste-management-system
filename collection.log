@@ -1,0 +1,14 @@
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T04:55:02.541Z"}
+{"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T04:55:02.654Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T04:55:02.681Z"}
+{"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T04:55:02.785Z"}
+{"body":{"collectionDate":"2024-10-27","collectionType":"Standard Waste","contactInfo":{"email":"p.g.m.sadeep2001@gmail.com","phoneNumber":"n"},"location":{"coordinates":[82.68629884591965,171.7030488833376],"type":"Point"},"paymentMethod":"Online Payment","pickupAddress":"nm","specialInstructions":"jhj","termsAgreed":true,"timeSlot":"Morning","wasteDescription":"mp"},"level":"info","message":"Creating a new collection","timestamp":"2024-10-20T04:55:59.808Z"}
+{"collection":{"__v":0,"_id":"67148d5f478fa98cd7b2281d","collectionDate":"2024-10-27T00:00:00.000Z","collectionType":"Standard Waste","contactInfo":{"email":"p.g.m.sadeep2001@gmail.com","phoneNumber":"n"},"createdAt":"2024-10-20T04:55:59.822Z","location":{"coordinates":[82.68629884591965,171.7030488833376],"type":"Point"},"paymentMethod":"Online Payment","pickupAddress":"nm","specialInstructions":"jhj","termsAgreed":true,"timeSlot":"Morning","updatedAt":"2024-10-20T04:55:59.822Z","wasteDescription":"mp"},"level":"info","message":"Collection created successfully","timestamp":"2024-10-20T04:55:59.938Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T04:56:04.972Z"}
+{"count":2,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T04:56:05.092Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T04:56:05.096Z"}
+{"count":2,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T04:56:05.318Z"}
+{"id":"67146ac86151cf32b4aa802f","level":"info","message":"Deleting collection with ID","timestamp":"2024-10-20T04:56:14.359Z"}
+{"id":"67146ac86151cf32b4aa802f","level":"info","message":"Collection deleted successfully","timestamp":"2024-10-20T04:56:14.464Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T04:56:14.475Z"}
+{"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T04:56:14.577Z"}
