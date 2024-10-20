@@ -34,11 +34,7 @@ const AuthComponent = () => {
         { autoClose: 3000 }
       );
       navigate(
-        isSignIn
-          ? res.data.isAdmin
-            ? "/admin-dashboard"
-            : "/profile"
-          : "/sign-in"
+        isSignIn ? (res.data.isAdmin ? "/admin/*" : "/profile") : "/sign-in"
       );
     } catch (error) {
       setLoading(false);
