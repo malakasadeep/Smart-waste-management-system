@@ -3,6 +3,11 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CreateNewBin from "./CreateNewBin";
 
+import dotenv from "dotenv";
+dotenv.config(); // Load environment variables
+
+
+
 test("renders CreateNewBin form with step 1 fields", () => {
   render(<CreateNewBin />);
 
