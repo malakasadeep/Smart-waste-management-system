@@ -83,11 +83,17 @@ const ScheduleModal = ({ onClose }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Collection Date</label>
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="collectionDate" // Ensure this points to the input's id
+              >
+                Collection Date
+              </label>
               <input
                 type="date"
                 {...register('collectionDate', { required: 'Collection date is required' })}
                 className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-customGreen-light focus:border-customGreen transition-all"
+                id="collectionDate" // Ensure the id matches the label's htmlFor
               />
               {errors.collectionDate && <ErrorMessage message={errors.collectionDate.message} />}
             </div>
