@@ -4,6 +4,7 @@ const JobSchema = new mongoose.Schema({
   jobId: {
     type: String,
     required: true,
+    unique: true, // Ensure jobId is unique
   },
   binId: {
     type: String,

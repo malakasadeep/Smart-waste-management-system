@@ -12,3 +12,7 @@
 {"id":"67146ac86151cf32b4aa802f","level":"info","message":"Collection deleted successfully","timestamp":"2024-10-20T04:56:14.464Z"}
 {"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T04:56:14.475Z"}
 {"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T04:56:14.577Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:04:37.678Z"}
+{"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:04:37.787Z"}
+{"level":"info","message":"Retrieving all collections","timestamp":"2024-10-20T05:04:37.790Z"}
+{"count":1,"level":"info","message":"Collections retrieved successfully","timestamp":"2024-10-20T05:04:37.888Z"}
