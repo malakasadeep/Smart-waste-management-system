@@ -148,7 +148,7 @@ const AdminSidebar = ({ onCollapseChange }) => {
           </SubMenu>
 
           <SubMenu
-            label={isCollapsed ? "" : "Suppliers"}
+            label={isCollapsed ? "" : "Complaints"}
             icon={<FaPaintBrush />}
             rootStyles={{
               color: "#fff",
@@ -158,13 +158,9 @@ const AdminSidebar = ({ onCollapseChange }) => {
               },
             }}
           >
-            <Link to="/addsupplier">
+            <Link to="/admin/allbug">
               {" "}
-              <MenuItem>Add Supplier</MenuItem>
-            </Link>
-            <Link to="/supplier">
-              {" "}
-              <MenuItem>Supplier List</MenuItem>
+              <MenuItem>Complaint</MenuItem>
             </Link>
           </SubMenu>
 

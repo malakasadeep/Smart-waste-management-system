@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 import ScheduleModal from "../Schedule/ScheduleModal";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 // Sample data (replace with actual data fetching logic)
 const userData = {
@@ -304,9 +305,11 @@ const UserProfile = () => {
             <p>
               If you notice any issues with your bins, please report them here.
             </p>
-            <button className="bg-yellow-500 hover:bg-yellow-400 text-white px-4 py-2 rounded flex items-center">
-              <AlertTriangle className="mr-2" /> Report Issue
-            </button>
+            <Link to="/binbugs">
+              <button className="bg-yellow-500 hover:bg-yellow-400 text-white px-4 py-2 rounded flex items-center">
+                <AlertTriangle className="mr-2" /> Report Issue
+              </button>
+            </Link>
           </div>
         </ProfileSection>
 
