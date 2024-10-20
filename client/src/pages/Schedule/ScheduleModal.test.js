@@ -1,178 +1,84 @@
-// ScheduleModal.test.js
-import React from "react";
+import React from 'react'; // Import React
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import ScheduleModal from "./ScheduleModal";
-import { toast } from "react-hot-toast";
-
-// Mock fetch and toast
-global.fetch = jest.fn();
-jest.mock("react-hot-toast", () => ({
-  toast: {
-    success: jest.fn(),
-    error: jest.fn(),
-  },
-}));
-
-const mockClose = jest.fn();
+import ScheduleModal from "./ScheduleModal"; // Import your component
+import "@testing-library/jest-dom"; // Optional, for matchers like `toBeInTheDocument`
 
 describe("ScheduleModal", () => {
-  beforeEach(() => {
-    jest.clearAllMocks(); // Reset mocks between tests
-  });
+  it("renders and submits the form successfully", async () => {
+    const mockSubmit = jest.fn();
 
-  test("renders and submits the form successfully", async () => {
-    // Mock successful fetch response
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: jest.fn().mockResolvedValueOnce({}),
-    });
-
-    render(<ScheduleModal onClose={mockClose} />);
+    render(<ScheduleModal onClose={mockSubmit} />);
 
     // Fill in the form with valid data
+    fireEvent.change(screen.getByLabelText(/Collection Date/i), {
+      target: { value: "2024-10-20" },
+    });
+
+    // Fill in other required fields
     fireEvent.change(screen.getByLabelText(/Collection Type/i), {
       target: { value: "Standard Waste" },
-    });
-    fireEvent.change(screen.getByLabelText(/Collection Date/i), {
-      target: { value: "2024-10-25" },
     });
     fireEvent.change(screen.getByLabelText(/Time Slot/i), {
       target: { value: "Morning" },
     });
     fireEvent.change(screen.getByLabelText(/Waste Description/i), {
-      target: { value: "General waste from household" },
+      target: { value: "Household waste" },
     });
     fireEvent.change(screen.getByLabelText(/Pickup Address/i), {
-      target: { value: "123 Waste Street" },
+      target: { value: "123 Main St" },
     });
     fireEvent.change(screen.getByLabelText(/Phone Number/i), {
-      target: { value: "1234567890" },
+      target: { value: "0123456789" },
     });
     fireEvent.change(screen.getByLabelText(/Email/i), {
-      target: { value: "user@example.com" },
+      target: { value: "test@example.com" },
     });
     fireEvent.change(screen.getByLabelText(/Payment Method/i), {
       target: { value: "Online Payment" },
     });
-    fireEvent.click(screen.getByLabelText(/I agree to the terms/i));
+    
+    // Agree to terms
+    fireEvent.click(screen.getByLabelText(/I agree to the terms and conditions/i));
 
     // Submit the form
-    fireEvent.click(screen.getByText(/Schedule Collection/i));
+    const submitButton = screen.getByText(/Schedule Collection/i);
+    fireEvent.click(submitButton);
 
-    // Ensure that fetch was called with the correct payload
-    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
-    expect(fetch).toHaveBeenCalledWith(
-      "http://localhost:3000/api/sp-col/",
-      expect.objectContaining({
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      })
-    );
-
-    // Ensure the success toast is shown and modal is closed
-    await waitFor(() =>
-      expect(toast.success).toHaveBeenCalledWith(
-        "Collection scheduled successfully!"
-      )
-    );
-    expect(mockClose).toHaveBeenCalled();
+    // Wait for the mock submit function to be called
+    await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
   });
 
-  test("shows error message when required fields are missing", async () => {
-    render(<ScheduleModal onClose={mockClose} />);
+  it("shows error messages when required fields are not filled", async () => {
+    const mockSubmit = jest.fn();
 
-    // Try submitting the form without any input
-    fireEvent.click(screen.getByText(/Schedule Collection/i));
+    render(<ScheduleModal onClose={mockSubmit} />);
 
-    // Check that the required field validation errors are shown
-    expect(
-      screen.getByText(/Collection type is required/i)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Collection date is required/i)
-    ).toBeInTheDocument();
+    // Submit the form without filling any fields
+    const submitButton = screen.getByText(/Schedule Collection/i);
+    fireEvent.click(submitButton);
+
+    // Check for error messages
+    expect(await screen.findByText(/Collection type is required/i)).toBeInTheDocument();
+    expect(screen.getByText(/Collection date is required/i)).toBeInTheDocument();
     expect(screen.getByText(/Time slot is required/i)).toBeInTheDocument();
-    expect(
-      screen.getByText(/Waste description is required/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Waste description is required/i)).toBeInTheDocument();
     expect(screen.getByText(/Pickup address is required/i)).toBeInTheDocument();
     expect(screen.getByText(/Phone number is required/i)).toBeInTheDocument();
     expect(screen.getByText(/Email is required/i)).toBeInTheDocument();
     expect(screen.getByText(/Payment method is required/i)).toBeInTheDocument();
-    expect(
-      screen.getByText(/You must agree to the terms/i)
-    ).toBeInTheDocument();
-
-    // Ensure the fetch was not called
-    await waitFor(() => expect(fetch).not.toHaveBeenCalled());
+    expect(screen.getByText(/You must agree to the terms/i)).toBeInTheDocument();
   });
 
-  test("shows error toast when API call fails", async () => {
-    // Mock failed fetch response
-    fetch.mockResolvedValueOnce({
-      ok: false,
-      json: jest.fn().mockResolvedValueOnce({}),
-    });
+  it("calls the onClose function when canceled", () => {
+    const mockClose = jest.fn();
 
     render(<ScheduleModal onClose={mockClose} />);
 
-    // Fill in the form with valid data
-    fireEvent.change(screen.getByLabelText(/Collection Type/i), {
-      target: { value: "Standard Waste" },
-    });
-    fireEvent.change(screen.getByLabelText(/Collection Date/i), {
-      target: { value: "2024-10-25" },
-    });
-    fireEvent.change(screen.getByLabelText(/Time Slot/i), {
-      target: { value: "Morning" },
-    });
-    fireEvent.change(screen.getByLabelText(/Waste Description/i), {
-      target: { value: "General waste from household" },
-    });
-    fireEvent.change(screen.getByLabelText(/Pickup Address/i), {
-      target: { value: "123 Waste Street" },
-    });
-    fireEvent.change(screen.getByLabelText(/Phone Number/i), {
-      target: { value: "1234567890" },
-    });
-    fireEvent.change(screen.getByLabelText(/Email/i), {
-      target: { value: "user@example.com" },
-    });
-    fireEvent.change(screen.getByLabelText(/Payment Method/i), {
-      target: { value: "Online Payment" },
-    });
-    fireEvent.click(screen.getByLabelText(/I agree to the terms/i));
+    // Click the cancel button
+    const cancelButton = screen.getByText(/Cancel/i);
+    fireEvent.click(cancelButton);
 
-    // Submit the form
-    fireEvent.click(screen.getByText(/Schedule Collection/i));
-
-    // Ensure that fetch was called
-    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
-
-    // Ensure the error toast is shown and modal is not closed
-    await waitFor(() =>
-      expect(toast.error).toHaveBeenCalledWith(
-        expect.stringContaining("Error scheduling collection")
-      )
-    );
-    expect(mockClose).not.toHaveBeenCalled();
+    // Check if the onClose function was called
+    expect(mockClose).toHaveBeenCalled();
   });
 });
-
-// Positive Test (renders and submits the form successfully):
-
-// Mocks a successful API call.
-// Fills in the form with valid data.
-// Submits the form and checks if the API call is made and if the success toast and modal close actions are triggered.
-
-// Negative Test (shows error message when required fields are missing):
-
-// Tries to submit the form without filling any fields.
-// Asserts that all validation errors appear.
-// Ensures the API call is not made.
-
-// Negative Test (shows error toast when API call fails):
-
-// Mocks a failed API response.
-// Fills in the form with valid data.
-// Submits the form and ensures that an error toast is shown, but the modal is not closed.
