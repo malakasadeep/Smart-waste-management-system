@@ -32,11 +32,11 @@
     "react-router-dom": "^6.27.0",
 
     "styled-components": "^6.1.13",
-    "sweetalert2": "^11.14.3"
+    "sweetalert2": "^11.14.3",
 
     "react-spinners": "^0.14.1",
-    "react-toastify": "^10.0.6",
-    "styled-components": "^6.1.13"
+    "react-toastify": "^10.0.6"
+    
 
   },
   "devDependencies": {
