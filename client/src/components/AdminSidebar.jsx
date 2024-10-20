@@ -111,20 +111,25 @@ const AdminSidebar = ({ onCollapseChange }) => {
             }}
             className="sidebar-submenu"
           >
-            <Link to="/">
+            <Link to="/admin/add">
               <MenuItem suffix={<span className="badge red"></span>}>
                 Add New Bin
               </MenuItem>
             </Link>
-            {/* <Link to="/add">
+            <Link to="/admin/allbin">
               <MenuItem suffix={<span className="badge red"></span>}>
-                Trac
+                Bin List
               </MenuItem>
-            </Link> */}
+            </Link>
+            <Link to="/admin/bmap">
+              <MenuItem suffix={<span className="badge red"></span>}>
+                Bin Map
+              </MenuItem>
+            </Link>
           </SubMenu>
 
           <SubMenu
-            label={isCollapsed ? "" : "Customer"}
+            label={isCollapsed ? "" : "Garbage Collect"}
             icon={<FaGlobe />}
             rootStyles={{
               color: "#fff",
@@ -134,8 +139,12 @@ const AdminSidebar = ({ onCollapseChange }) => {
               },
             }}
           >
-            <MenuItem>Google Maps</MenuItem>
-            <MenuItem>OpenStreetMap</MenuItem>
+            <Link to="/admin/gcoll">
+              <MenuItem>Scan Bin</MenuItem>
+            </Link>
+            <Link to="/admin/job">
+              <MenuItem>Recent Jobs</MenuItem>
+            </Link>
           </SubMenu>
 
           <SubMenu

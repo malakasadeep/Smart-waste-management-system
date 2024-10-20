@@ -20,6 +20,7 @@
     "@mui/styled-engine-sc": "^6.1.4",
     "@react-google-maps/api": "^2.20.3",
     "axios": "^1.7.7",
+    "firebase": "^10.14.1",
     "components": "^0.1.0",
     "date-fns": "^4.1.0",
     "firebase": "^10.14.1",
